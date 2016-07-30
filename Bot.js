@@ -16,7 +16,7 @@ class Bot extends EventEmitter {
 
   intercept() {
     return (req, res, next) => {
-      if (this.verifyToken && req.method === 'GET') {
+      if (this.facebook.verifyToken && req.method === 'GET') {
         return this._verify(req, res);
       } else if (req.method === 'POST') {
         this._dispatch(req.body);
