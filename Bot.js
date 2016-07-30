@@ -19,7 +19,11 @@ class Bot extends EventEmitter {
       if (this.facebook.verifyToken && req.method === 'GET') {
         return this._verify(req, res);
       } else if (req.method === 'POST') {
-        this._dispatch(req.body);
+	if (req.body) {
+	    this._dispatch(req.body);
+	} else {
+	  console.log(`POST bodies are not being parse properly`);
+	}
         res.sendStatus(200);
       }
       next();
