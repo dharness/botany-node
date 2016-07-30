@@ -19,11 +19,11 @@ class Bot extends EventEmitter {
       if (this.facebook.verifyToken && req.method === 'GET') {
         return this._verify(req, res);
       } else if (req.method === 'POST') {
-	if (req.body) {
-	    this._dispatch(req.body);
-	} else {
-	  console.log(`POST bodies are not being parse properly`);
-	}
+        	if (req.body) {
+        	    this._dispatch(req.body);
+        	} else {
+        	  console.log(`POST bodies are not being parse properly`);
+        	}
         res.sendStatus(200);
       }
       next();
@@ -67,7 +67,9 @@ class Bot extends EventEmitter {
           if (messagingEvent.optin) {
             this._receivedAuthentication(messagingEvent);
           } else if (messagingEvent.message) {
-            this._receivedMessage(messagingEvent);
+            if (pageID !== messagingEvent.sender.id) {
+              this._receivedMessage(messagingEvent);
+            }
           } else if (messagingEvent.delivery) {
             this._receivedDeliveryConfirmation(messagingEvent);
           } else if (messagingEvent.postback) {
